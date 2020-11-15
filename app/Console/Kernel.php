@@ -2,8 +2,12 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\WeatherController;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +17,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+    \App\Console\Commands\GetApi::class,
+        \App\Console\Commands\DeleteApi::class
     ];
 
     /**
@@ -24,8 +29,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('weatherdestroy')->everyMinute();
+        $schedule->command('weatherrecord')
+            ->everyMinute();
     }
 
     /**

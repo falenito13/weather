@@ -15,9 +15,12 @@ class CreateWeatherTable extends Migration
     {
         Schema::create('weather', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->json('georgia_country');
+            $table->string('georgia_country');
             $table->string('celsius');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
+
+
 
         });
     }
@@ -29,6 +32,15 @@ class CreateWeatherTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weather');
+        Schema::create('weather',function(Blueprint $table){
+            $table->dropColumn('id');
+            $table->dropColumn('georgia_country');
+            $table->dropColumn('celsius');
+            $table->dropColumn('created_at');
+            $table->dropColumn('updated_at');
+
+
+
+        });
     }
 }
